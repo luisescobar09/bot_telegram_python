@@ -1,5 +1,7 @@
 import sys, os, datetime, requests, json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from os import remove
+from os import path
 
 token = "1719347357:AAHNHLmsFkAiYg4LK3Z5-bTu9FQAn_3EKPg"
 
@@ -10,7 +12,7 @@ mexico_hour = int(mexico_time.strftime("%H"))
 
 def start(bot, update):
     try:
-        username = update.message.from_user.username + "\n\nEnvía una imagen para saber qué tipo de señal de transito es."
+        username = update.message.from_user.username + "\n\nEnvía una imagen para saber qué tipo de señal de transito es (requiere imagenes con tamaño grande)."
         if mexico_hour >= 0 and mexico_hour <= 11:
             message = "Buenos días " + username
         elif mexico_hour >= 12 and mexico_hour <= 18:
@@ -32,7 +34,7 @@ def echo(bot, update):
 
 def help(bot, update):
     try:
-        message = "Puedes enviar texto o imagenes."
+        message = "Puedes enviar texto o imagenes con tamañao grande."
         update.message.reply_text(message)
     except Exception as error:
         print("Error 003 {}".format(error.args[0]))
@@ -70,6 +72,9 @@ def getImage(bot, update):
 
         message = "Resultado: "+title+"\nDescripción: "+description
         update.message.reply_text(message)
+
+        if path.exists(filename):
+            remove(filename)
 
 
     except Exception as e:
