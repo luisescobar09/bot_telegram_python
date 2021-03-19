@@ -60,7 +60,7 @@ def getImage(bot, update):
         files = { "myfile": open(filename, "rb") }
         message = "Procesando imagen"
         update.message.reply_text(message)
-        result = requests.post("https://8080-silver-herring-vjtlg583.ws-us03.gitpod.io/index", files = files)
+        result = requests.post("https://8080-silver-herring-vjtlg583.ws-us03.gitpod.io/index", files = files) 
 
         signal = result.json()
         items = signal[list(signal.keys())[0]]
